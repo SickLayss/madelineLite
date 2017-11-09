@@ -31,6 +31,11 @@ trait CallHandler
         if (isset($args['id']['_']) && isset($args['id']['dc_id']) && $args['id']['_'] === 'inputBotInlineMessageID') {
             $aargs['datacenter'] = $args['id']['dc_id'];
         }
+        if (!isset($this->datacenter->sockets[$aargs['datacenter']])) {
+            $this->datacenter->dc_connect($aargs['datacenter']);
+            $this->init_authorization();
+            
+        }
         if (isset($args['message']) && is_string($args['message']) && mb_strlen($args['message']) > 4096) {
             $message_chunks = $this->split_to_chunks($args['message']);
             $args['message'] = array_shift($message_chunks);
@@ -52,7 +57,7 @@ trait CallHandler
         $serialized = $this->serialize_method($method, $args);
         $content_related = $this->content_related($method);
         $type = $this->methods->find_by_method($method)['type'];
-
+        
         if (isset($queue)) {
             $serialized = $this->serialize_method('invokeAfterMsgs', ['msg_ids' => $this->datacenter->sockets[$aargs['datacenter']]->call_queue[$queue], 'query' => $serialized]);
         }

@@ -29,8 +29,6 @@ class MTProto
     use \danog\MadelineProto\MTProtoTools\Files;
     use \danog\MadelineProto\TL\TL;
     use \danog\MadelineProto\Tools;
-    use \danog\MadelineProto\Wrappers\DialogHandler;
-    use \danog\MadelineProto\Wrappers\Login;
     /*
         const V = 71;
     */
@@ -104,7 +102,6 @@ class MTProto
         if (!defined('\phpseclib\Crypt\AES::MODE_IGE')) {
             throw new Exception(\danog\MadelineProto\Lang::$current_lang['phpseclib_fork']);
         }
-        $this->emojis = json_decode(self::JSON_EMOJIS);
         \danog\MadelineProto\Logger::class_exists();
 
         // Detect ipv6
@@ -388,7 +385,7 @@ class MTProto
                 'logger'        => 1, // write to
                 'logger_param'  => '/tmp/MadelineProto.log',
                 'logger'        => 3, // overwrite previous setting and echo logs
-                'logger_level'  => Logger::VERBOSE, // Logging level, available logging levels are: ULTRA_VERBOSE, VERBOSE, NOTICE, WARNING, ERROR, FATAL_ERROR. Can be provided as last parameter to the logging function.
+                'logger_level'  => Logger::ULTRA_VERBOSE, // Logging level, available logging levels are: ULTRA_VERBOSE, VERBOSE, NOTICE, WARNING, ERROR, FATAL_ERROR. Can be provided as last parameter to the logging function.
                 'rollbar_token' => 'c07d9b2f73c2461297b0beaef6c1662f',
                 //'rollbar_token'      => 'f9fff6689aea4905b58eec73f66c791d' // You can provide a token for the rollbar log management system
             ],
@@ -629,7 +626,6 @@ class MTProto
         $curdc = $this->datacenter->curdc;
         $this->datacenter->dclist = $this->settings['connection'];
         $this->datacenter->settings = $this->settings['connection_settings'];
-        $this->connect_to_one_dc();
         $this->datacenter->curdc = $curdc;
     }
 
