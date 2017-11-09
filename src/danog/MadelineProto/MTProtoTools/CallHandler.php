@@ -185,6 +185,12 @@ trait CallHandler
                 //if (in_array($this->datacenter->sockets[$aargs['datacenter']]->protocol, ['http', 'https']) && $method !== 'http_wait') {
                 //$this->method_call('http_wait', ['max_wait' => $this->datacenter->sockets[$aargs['datacenter']]->timeout, 'wait_after' => 0, 'max_delay' => 0], ['datacenter' => $aargs['datacenter']]);
                 //} else {
+                if (!isset($this->datacenter->sockets[$aargs['datacenter']])) {
+                    $this->datacenter->dc_connect($aargs['datacenter']);
+                    $this->init_authorization();
+            
+                }
+
                 $this->datacenter->sockets[$aargs['datacenter']]->close_and_reopen();
                 //}
                 continue;
