@@ -1,6 +1,6 @@
 # MadelineLite
 
-This is a barebone version of [MadelineProto](docs.madelineproto.xyz).
+This is a barebone version of [MadelineProto](https://docs.madelineproto.xyz).
 
 
 It has no update handling, no peer handling, no flood waits, no secret chat handling, no call handling.
